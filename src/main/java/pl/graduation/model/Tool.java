@@ -10,7 +10,7 @@ public class Tool {
     @GeneratedValue
     private int id;
     private String name;
-    @Column(length = 1000)
+    @Column(length = 10000)
     private String iconURL;
     private String shortDescription;
     @Column(length = 1500)
