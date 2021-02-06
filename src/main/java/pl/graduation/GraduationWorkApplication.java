@@ -48,14 +48,14 @@ public class GraduationWorkApplication {
         };
     }
 
-//    @PostConstruct
-//    void setUp() throws IOException {
-//
-//        ExcelReader.fillDB(toolRepository, "FUTURE_ Database final contentPL.xlsx");
-//
-//        userRepository.save(new User("Tomek", new BCryptPasswordEncoder().encode("tomek"), Arrays.asList("ROLE_USER", "ROLE_EDITOR", "ROLE_ADMIN"), "tomek@gmail.com", 23));
-//        userRepository.save(new User("Marcin", new BCryptPasswordEncoder().encode("marcin"), Arrays.asList("ROLE_USER"), "marcin@gmail.com", 12));
-//        userRepository.save(new User("Piotr", new BCryptPasswordEncoder().encode("piotr"), Arrays.asList("ROLE_USER"), "piotr@gmail.com", 21));
-//        userRepository.save(new User("Ziomek", new BCryptPasswordEncoder().encode("ziomek"), Arrays.asList("ROLE_USER", "ROLE_EDITOR"), "ziomek@gmail.com", 87));
-//    }
+    @PostConstruct
+    void setUp() throws IOException {
+
+        ExcelReader.fillDB(toolRepository, "FUTURE_ Database final contentPL.xlsx");
+
+        userRepository.save(new User("Tomek", new BCryptPasswordEncoder().encode("tomek"), Arrays.asList("ROLE_USER", "ROLE_EDITOR", "ROLE_ADMIN"), "tomek@gmail.com", 23));
+        userRepository.save(new User("Marcin", new BCryptPasswordEncoder().encode("marcin"), Arrays.asList("ROLE_USER"), "marcin@gmail.com", 12));
+        userRepository.save(new User("Piotr", new BCryptPasswordEncoder().encode("piotr"), Arrays.asList("ROLE_USER"), "piotr@gmail.com", 21));
+        userRepository.save(new User("Ziomek", new BCryptPasswordEncoder().encode("ziomek"), Arrays.asList("ROLE_USER", "ROLE_EDITOR"), "ziomek@gmail.com", 87));
+    }
 }
