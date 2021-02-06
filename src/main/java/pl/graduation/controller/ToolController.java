@@ -101,7 +101,7 @@ public class ToolController {
     @GetMapping("tool/{id}")
     public ResponseEntity<?> getTool(@PathVariable("id") int id) {
         Optional<Tool> tool = toolRepository.findById(id);
-        if (tool.isEmpty())
+        if (!tool.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is no Tool with such id");
         JSONObject jsonObject = new JSONObject()
                 .appendField("status", "success")
@@ -111,7 +111,7 @@ public class ToolController {
 
     @DeleteMapping("tool/{id}")
     public ResponseEntity<?> deleteTool(@PathVariable("id") int id) {
-        if (toolRepository.findById(id).isEmpty())
+        if (!toolRepository.findById(id).isPresent())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is no tool with such id");
         Optional<Tool> tool = toolRepository.findById(id);
         postRepository.findAllByTool(tool.get()).forEach(post -> {
@@ -130,7 +130,7 @@ public class ToolController {
     public ResponseEntity<?> updateTool(@PathVariable("id") int id, @RequestBody Tool tool) {
         System.out.println("asd");
         Optional<Tool> toolOptional = toolRepository.findById(id);
-        if (toolOptional.isEmpty()) {
+        if (!toolOptional.isPresent()) {
             return ResponseEntity.notFound().build();
         }
         tool.setId(id);

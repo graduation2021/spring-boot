@@ -62,7 +62,7 @@ public class UserController {
     @GetMapping("admin/user/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") int id){
         Optional<User> user = userRepository.findById(id);
-        if(user.isEmpty())
+        if(!user.isPresent())
             return ResponseEntity.notFound().build();
 
         JSONObject jsonObject = new JSONObject()
@@ -74,7 +74,7 @@ public class UserController {
     @PatchMapping("admin/user/{id}")
     public ResponseEntity<?> updateRole(@PathVariable("id") int id, @RequestBody Map<String, Object> updates){
         Optional<User> user = userRepository.findById(id);
-        if(user.isEmpty())
+        if(!user.isPresent())
             return ResponseEntity.notFound().build();
 
         if(updates.containsKey("role")){
@@ -92,7 +92,7 @@ public class UserController {
     @DeleteMapping("admin/user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") int id){
         Optional<User> user = userRepository.findById(id);
-        if(user.isEmpty())
+        if(!user.isPresent())
             return ResponseEntity.notFound().build();
 
         postRepository.findAllByUser(user.get()).forEach(post -> {

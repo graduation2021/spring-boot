@@ -64,7 +64,7 @@ public class CommentController {
                                   @PathVariable("post_id") int post_id){
         Optional<Post> post = postRepository.findById(post_id);
         User user = userRepository.findByUsername(authUser.getName());
-        if (post.isEmpty())
+        if (!post.isPresent())
             return ResponseEntity.notFound().build();
         commentRepository.save(new Comment(user, post.get(), request.get("content").toString(), LocalDateTime.now()));
         JSONObject jsonObject = new JSONObject()

@@ -34,7 +34,7 @@ public class LikeController {
     @GetMapping("/like/{tool_id}")
     public ResponseEntity<?> getLikesOfTool(@PathVariable("tool_id") int tool_id, @AuthenticationPrincipal UsernamePasswordAuthenticationToken authUser){
         Optional<Tool> tool = toolRepository.findById(tool_id);
-        if(tool.isEmpty()){
+        if(!tool.isPresent()){
             return ResponseEntity.notFound().build();
         }
         long numberOfLikes = likesRepository.findByTool(tool.get()).stream().filter(like -> like.getIsLiked() == 1).count();
@@ -51,7 +51,7 @@ public class LikeController {
     public ResponseEntity<?> addLikeToTool(@PathVariable("tool_id") int tool_id, @AuthenticationPrincipal UsernamePasswordAuthenticationToken authUser){
         Optional<Tool> tool = toolRepository.findById(tool_id);
         User user = userRepository.findByUsername(authUser.getName());
-        if(tool.isEmpty() || user == null){
+        if(!tool.isPresent() || user == null){
             return ResponseEntity.notFound().build();
         }
         if (likesRepository.findByTool(tool.get()).stream().anyMatch(likes -> likes.getUser().getUsername().equals(authUser.getName())))
@@ -65,7 +65,7 @@ public class LikeController {
     public ResponseEntity<?> deleteLike(@PathVariable("tool_id") int tool_id, @AuthenticationPrincipal UsernamePasswordAuthenticationToken authUser){
         Optional<Tool> tool = toolRepository.findById(tool_id);
         User user = userRepository.findByUsername(authUser.getName());
-        if(tool.isEmpty() || user == null){
+        if(!tool.isPresent() || user == null){
             return ResponseEntity.notFound().build();
         }
         Optional<Likes> like = likesRepository.findByTool(tool.get()).stream().filter(x -> x.getUser().getUsername().equals(authUser.getName())).findAny();

@@ -69,7 +69,7 @@ public class PostController {
                                   @PathVariable("tool_id") int tool_id) {
         Optional<Tool> tool = toolRepository.findById(tool_id);
         User user = userRepository.findByUsername(authUser.getName());
-        if(tool.isEmpty())
+        if(!tool.isPresent())
             return ResponseEntity.notFound().build();
         postRepository.save(new Post(tool.get(), user, request.get("content").toString(), LocalDateTime.now()));
         JSONObject jsonObject = new JSONObject()
@@ -93,7 +93,7 @@ public class PostController {
         Optional<Post> post = postRepository.findById(post_id);
         if (post.isPresent() && (user.getRole().contains("ROLE_ADMIN") || post.get().getUser().getId() == user.getId())) {
             List<Comment> listOfComments = commentRepository.findAllByPost(post.get());
-            listOfComments.forEach(comment -> commentRepository.delete(comment));
+            listOfComments.forEach(commentRepository::delete);
             postRepository.delete(post.get());
             JSONObject jsonObject = new JSONObject()
                     .appendField("status", "success")
